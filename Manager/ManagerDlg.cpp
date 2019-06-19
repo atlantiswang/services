@@ -273,8 +273,8 @@ void CManagerDlg::ShowServices(RClServerSearchType searchType, std::string name)
 void CManagerDlg::OnCbnSelchangeComboSearch()
 {
     
-    RClServerSearchType sel = (RClServerSearchType)m_Search.GetCurSel();
-    if (sel == RC_NAME)
+    RClServerSearchType select = (RClServerSearchType)m_Search.GetCurSel();
+    if (select == RC_NAME)
     {
         GetDlgItem(IDC_BUTTON_SEARCH)->ShowWindow(SW_SHOW);
         GetDlgItem(IDC_EDIT_SERVICE_NAME)->ShowWindow(SW_SHOW);
@@ -286,7 +286,7 @@ void CManagerDlg::OnCbnSelchangeComboSearch()
         GetDlgItem(IDC_BUTTON_SEARCH)->ShowWindow(SW_HIDE);
         GetDlgItem(IDC_EDIT_SERVICE_NAME)->ShowWindow(SW_HIDE);
     }
-    ShowServices(sel);
+    ShowServices(select);
 }
 
 
@@ -396,11 +396,6 @@ void CManagerDlg::OnNMRClickListService(NMHDR *pNMHDR, LRESULT *pResult)
             popup->EnableMenuItem(ID_MENU_RESTART, MF_DISABLED);
             popup->EnableMenuItem(ID_MENU_FORBIDDEN_START, MF_DISABLED);
             popup->EnableMenuItem(ID_MENU_FORBIDDEN_STOP, MF_DISABLED);
-
-//             popup->EnableMenuItem(ID_MENU_AUTO, MF_DISABLED);
-//             popup->EnableMenuItem(ID_MENU_AUTO_DELAY, MF_DISABLED);
-//             popup->EnableMenuItem(ID_MAN, MF_DISABLED);
-//             popup->EnableMenuItem(ID_FORBIDDEN, MF_DISABLED);
         }
 
         int menuItem = popup->TrackPopupMenu(TPM_LEFTALIGN | TPM_RIGHTBUTTON, point.x, point.y, this);
@@ -432,10 +427,10 @@ void CManagerDlg::OnMenuStop()
     // TODO: Add your command handler code here
     if(m_SvrDrvManager.ControlServer(m_CurrentItem.serverName, RC_SERVER_STOP) == true)
     {
-        RCINFO rcinfo = { 0 };
-        if (m_SvrDrvManager.UpdateService(m_CurrentItem.serverName, rcinfo) == true)
+        RCINFO infomation = { 0 };
+        if (m_SvrDrvManager.UpdateService(m_CurrentItem.serverName, infomation) == true)
         {
-            m_ServiceList.SetItemText(m_CurrentItem.item, 4, rcinfo.serverStatus);
+            m_ServiceList.SetItemText(m_CurrentItem.item, 4, infomation.serverStatus);
         }
     }
     else
@@ -449,10 +444,10 @@ void CManagerDlg::OnMenuRestart()
     // TODO: Add your command handler code here
     if (m_SvrDrvManager.ControlServer(m_CurrentItem.serverName, RC_SERVER_RESET) == true)
     {
-        RCINFO rcinfo = { 0 };
-        if (m_SvrDrvManager.UpdateService(m_CurrentItem.serverName, rcinfo) == true)
+        RCINFO infomation = { 0 };
+        if (m_SvrDrvManager.UpdateService(m_CurrentItem.serverName, infomation) == true)
         {
-            m_ServiceList.SetItemText(m_CurrentItem.item, 4, rcinfo.serverStatus);
+            m_ServiceList.SetItemText(m_CurrentItem.item, 4, infomation.serverStatus);
         }
     }
 }
@@ -463,10 +458,10 @@ void CManagerDlg::OnMenuAuto()
     // TODO: Add your command handler code here
     if (m_SvrDrvManager.ChangeStartType(m_CurrentItem.serverName, SERVICE_AUTO_START))
     {
-        RCINFO rcinfo = { 0 };
-        if (m_SvrDrvManager.UpdateService(m_CurrentItem.serverName, rcinfo) == true)
+        RCINFO infomation = { 0 };
+        if (m_SvrDrvManager.UpdateService(m_CurrentItem.serverName, infomation) == true)
         {
-            m_ServiceList.SetItemText(m_CurrentItem.item, 5, rcinfo.startType);
+            m_ServiceList.SetItemText(m_CurrentItem.item, 5, infomation.startType);
         }
     }
 }
@@ -476,10 +471,10 @@ void CManagerDlg::OnMan()
     // TODO: Add your command handler code here
     if (m_SvrDrvManager.ChangeStartType(m_CurrentItem.serverName, SERVICE_DEMAND_START))
     {
-        RCINFO rcinfo = { 0 };
-        if (m_SvrDrvManager.UpdateService(m_CurrentItem.serverName, rcinfo) == true)
+        RCINFO infomation = { 0 };
+        if (m_SvrDrvManager.UpdateService(m_CurrentItem.serverName, infomation) == true)
         {
-            m_ServiceList.SetItemText(m_CurrentItem.item, 5, rcinfo.startType);
+            m_ServiceList.SetItemText(m_CurrentItem.item, 5, infomation.startType);
         }
     }
 }
@@ -489,10 +484,10 @@ void CManagerDlg::OnForbidden()
     // TODO: Add your command handler code here
     if (m_SvrDrvManager.ChangeStartType(m_CurrentItem.serverName, SERVICE_DISABLED))
     {
-        RCINFO rcinfo = { 0 };
-        if (m_SvrDrvManager.UpdateService(m_CurrentItem.serverName, rcinfo) == true)
+        RCINFO infomation = { 0 };
+        if (m_SvrDrvManager.UpdateService(m_CurrentItem.serverName, infomation) == true)
         {
-            m_ServiceList.SetItemText(m_CurrentItem.item, 5, rcinfo.startType);
+            m_ServiceList.SetItemText(m_CurrentItem.item, 5, infomation.startType);
         }
     }
 }
@@ -516,10 +511,10 @@ void CManagerDlg::OnMenuDriverAuto()
     // TODO: Add your command handler code here
     if (m_SvrDrvManager.ChangeStartType(m_CurrentItem.serverName, SERVICE_BOOT_START))
     {
-        RCINFO rcinfo = { 0 };
-        if (m_SvrDrvManager.UpdateService(m_CurrentItem.serverName, rcinfo) == true)
+        RCINFO infomation = { 0 };
+        if (m_SvrDrvManager.UpdateService(m_CurrentItem.serverName, infomation) == true)
         {
-            m_ServiceList.SetItemText(m_CurrentItem.item, 5, rcinfo.startType);
+            m_ServiceList.SetItemText(m_CurrentItem.item, 5, infomation.startType);
         }
     }
 }
@@ -529,10 +524,10 @@ void CManagerDlg::OnMenuDriverMan()
     // TODO: Add your command handler code here
     if (m_SvrDrvManager.ChangeStartType(m_CurrentItem.serverName, SERVICE_SYSTEM_START))
     {
-        RCINFO rcinfo = { 0 };
-        if (m_SvrDrvManager.UpdateService(m_CurrentItem.serverName, rcinfo) == true)
+        RCINFO infomation = { 0 };
+        if (m_SvrDrvManager.UpdateService(m_CurrentItem.serverName, infomation) == true)
         {
-            m_ServiceList.SetItemText(m_CurrentItem.item, 5, rcinfo.startType);
+            m_ServiceList.SetItemText(m_CurrentItem.item, 5, infomation.startType);
         }
     }
 }
@@ -590,7 +585,6 @@ void CManagerDlg::OnMenuForbiddenStop()
 
     WriteJsonData();
 }
-
 
 void CManagerDlg::OnBnClickedButtonUpdateall()
 {

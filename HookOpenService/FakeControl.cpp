@@ -12,12 +12,12 @@ TRCStartServiceW g_pfnStartServiceW = NULL;
 TRCControlService g_pfnControlService = NULL;
 TRCCloseServiceHandle g_pfnCloseServiceHandle = NULL;
 
-ULONG hookOpenServiceA_ACLEntries[1] = { 0 };
-ULONG hookOpenServiceW_ACLEntries[1] = { 0 };
-ULONG hookStartServiceA_ACLEntries[1] = { 0 };
-ULONG hookStartServiceW_ACLEntries[1] = { 0 };
-ULONG hookControlService_ACLEntries[1] = { 0 };
-ULONG hookCloseServiceHandle_ACLEntries[1] = { 0 };
+ULONG g_hookOpenServiceAclEntriesA[1] = { 0 };
+ULONG g_hookOpenServiceAclEntriesW[1] = { 0 };
+ULONG g_hookStartServiceAclEntriesA[1] = { 0 };
+ULONG g_hookStartServiceAclEntriesW[1] = { 0 };
+ULONG g_hookControlServiceAclEntries[1] = { 0 };
+ULONG g_hookCloseServiceHandleAclEntries[1] = { 0 };
 
 std::map<std::string, RCFORBIDDENINFO> g_JsonDataMap;
 

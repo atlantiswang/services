@@ -10,12 +10,12 @@
 
 #pragma warning(disable:4996)
 
-TRACED_HOOK_HANDLE  hHookOpenServiceA = new HOOK_TRACE_INFO();
-TRACED_HOOK_HANDLE  hHookOpenServiceW = new HOOK_TRACE_INFO();
-TRACED_HOOK_HANDLE  hHookStartServiceA = new HOOK_TRACE_INFO();
-TRACED_HOOK_HANDLE  hHookStartServiceW = new HOOK_TRACE_INFO();
-TRACED_HOOK_HANDLE  hHookControlService = new HOOK_TRACE_INFO();
-TRACED_HOOK_HANDLE  hHookCloseServiceHandle = new HOOK_TRACE_INFO();
+TRACED_HOOK_HANDLE  g_hHookOpenServiceA = new HOOK_TRACE_INFO();
+TRACED_HOOK_HANDLE  g_hHookOpenServiceW = new HOOK_TRACE_INFO();
+TRACED_HOOK_HANDLE  g_hHookStartServiceA = new HOOK_TRACE_INFO();
+TRACED_HOOK_HANDLE  g_hHookStartServiceW = new HOOK_TRACE_INFO();
+TRACED_HOOK_HANDLE  g_hHookControlService = new HOOK_TRACE_INFO();
+TRACED_HOOK_HANDLE  g_hHookCloseServiceHandle = new HOOK_TRACE_INFO();
 
 //≥ı ºªØ
 BOOL Init()
@@ -76,67 +76,67 @@ BOOL InstallHook()
 {
     NTSTATUS status;
 
-    status = LhInstallHook(g_pfnOpenServiceA, FakeOpenServiceA, NULL, hHookOpenServiceA);
+    status = LhInstallHook(g_pfnOpenServiceA, FakeOpenServiceA, NULL, g_hHookOpenServiceA);
     if (!SUCCEEDED(status))
     {
         return FALSE;
     }
-    status = LhSetExclusiveACL(hookOpenServiceA_ACLEntries, 1, hHookOpenServiceA);
-    if (!SUCCEEDED(status))
-    {
-        return FALSE;
-    }
-
-    status = LhInstallHook(g_pfnOpenServiceW, FakeOpenServiceW, NULL, hHookOpenServiceW);
-    if (!SUCCEEDED(status))
-    {
-        return FALSE;
-    }
-    status = LhSetExclusiveACL(hookOpenServiceW_ACLEntries, 1, hHookOpenServiceW);
+    status = LhSetExclusiveACL(g_hookOpenServiceAclEntriesA, 1, g_hHookOpenServiceA);
     if (!SUCCEEDED(status))
     {
         return FALSE;
     }
 
-    status = LhInstallHook(g_pfnStartServiceA, FakeStartServiceA, NULL, hHookStartServiceA);
+    status = LhInstallHook(g_pfnOpenServiceW, FakeOpenServiceW, NULL, g_hHookOpenServiceW);
     if (!SUCCEEDED(status))
     {
         return FALSE;
     }
-    status = LhSetExclusiveACL(hookStartServiceA_ACLEntries, 1, hHookStartServiceA);
-    if (!SUCCEEDED(status))
-    {
-        return FALSE;
-    }
-
-    status = LhInstallHook(g_pfnStartServiceW, FakeStartServiceW, NULL, hHookStartServiceW);
-    if (!SUCCEEDED(status))
-    {
-        return FALSE;
-    }
-    status = LhSetExclusiveACL(hookOpenServiceW_ACLEntries, 1, hHookStartServiceW);
+    status = LhSetExclusiveACL(g_hookOpenServiceAclEntriesW, 1, g_hHookOpenServiceW);
     if (!SUCCEEDED(status))
     {
         return FALSE;
     }
 
-    status = LhInstallHook(g_pfnControlService, FakeControlService, NULL, hHookControlService);
+    status = LhInstallHook(g_pfnStartServiceA, FakeStartServiceA, NULL, g_hHookStartServiceA);
     if (!SUCCEEDED(status))
     {
         return FALSE;
     }
-    status = LhSetExclusiveACL(hookControlService_ACLEntries, 1, hHookControlService);
+    status = LhSetExclusiveACL(g_hookStartServiceAclEntriesA, 1, g_hHookStartServiceA);
     if (!SUCCEEDED(status))
     {
         return FALSE;
     }
 
-    status = LhInstallHook(g_pfnCloseServiceHandle, FakeCloseServiceHandle, NULL, hHookCloseServiceHandle);
+    status = LhInstallHook(g_pfnStartServiceW, FakeStartServiceW, NULL, g_hHookStartServiceW);
     if (!SUCCEEDED(status))
     {
         return FALSE;
     }
-    status = LhSetExclusiveACL(hookCloseServiceHandle_ACLEntries, 1, hHookCloseServiceHandle);
+    status = LhSetExclusiveACL(g_hookOpenServiceAclEntriesW, 1, g_hHookStartServiceW);
+    if (!SUCCEEDED(status))
+    {
+        return FALSE;
+    }
+
+    status = LhInstallHook(g_pfnControlService, FakeControlService, NULL, g_hHookControlService);
+    if (!SUCCEEDED(status))
+    {
+        return FALSE;
+    }
+    status = LhSetExclusiveACL(g_hookControlServiceAclEntries, 1, g_hHookControlService);
+    if (!SUCCEEDED(status))
+    {
+        return FALSE;
+    }
+
+    status = LhInstallHook(g_pfnCloseServiceHandle, FakeCloseServiceHandle, NULL, g_hHookCloseServiceHandle);
+    if (!SUCCEEDED(status))
+    {
+        return FALSE;
+    }
+    status = LhSetExclusiveACL(g_hookCloseServiceHandleAclEntries, 1, g_hHookCloseServiceHandle);
     if (!SUCCEEDED(status))
     {
         return FALSE;
@@ -150,42 +150,42 @@ BOOL Hook()
 {
     NTSTATUS status;
 
-    status = LhInstallHook(g_pfnOpenServiceA, FakeOpenServiceA, NULL, hHookOpenServiceA);
+    status = LhInstallHook(g_pfnOpenServiceA, FakeOpenServiceA, NULL, g_hHookOpenServiceA);
     if (!SUCCEEDED(status))
     {
         char chMsg[MAX_PATH] = { 0 };
         return FALSE;
     }
 
-    status = LhInstallHook(g_pfnOpenServiceW, FakeOpenServiceW, NULL, hHookOpenServiceW);
+    status = LhInstallHook(g_pfnOpenServiceW, FakeOpenServiceW, NULL, g_hHookOpenServiceW);
     if (!SUCCEEDED(status))
     {
         char chMsg[MAX_PATH] = { 0 };
         return FALSE;
     }
 
-    status = LhInstallHook(g_pfnStartServiceA, FakeStartServiceA, NULL, hHookStartServiceA);
+    status = LhInstallHook(g_pfnStartServiceA, FakeStartServiceA, NULL, g_hHookStartServiceA);
     if (!SUCCEEDED(status))
     {
         char chMsg[MAX_PATH] = { 0 };
         return FALSE;
     }
 
-    status = LhInstallHook(g_pfnStartServiceW, FakeStartServiceW, NULL, hHookStartServiceW);
+    status = LhInstallHook(g_pfnStartServiceW, FakeStartServiceW, NULL, g_hHookStartServiceW);
     if (!SUCCEEDED(status))
     {
         char chMsg[MAX_PATH] = { 0 };
         return FALSE;
     }
 
-    status = LhInstallHook(g_pfnControlService, FakeControlService, NULL, hHookControlService);
+    status = LhInstallHook(g_pfnControlService, FakeControlService, NULL, g_hHookControlService);
     if (!SUCCEEDED(status))
     {
         char chMsg[MAX_PATH] = { 0 };
         return FALSE;
     }
 
-    status = LhInstallHook(g_pfnCloseServiceHandle, FakeCloseServiceHandle, NULL, hHookCloseServiceHandle);
+    status = LhInstallHook(g_pfnCloseServiceHandle, FakeCloseServiceHandle, NULL, g_hHookCloseServiceHandle);
     if (!SUCCEEDED(status))
     {
         char chMsg[MAX_PATH] = { 0 };
@@ -200,34 +200,34 @@ BOOL UnInstallHook()
 {
     LhUninstallAllHooks();
 
-    if (hHookOpenServiceA)
+    if (g_hHookOpenServiceA)
     {
-        LhUninstallHook(hHookOpenServiceA);
+        LhUninstallHook(g_hHookOpenServiceA);
     }
 
-    if (hHookOpenServiceW)
+    if (g_hHookOpenServiceW)
     {
-        LhUninstallHook(hHookOpenServiceW);
+        LhUninstallHook(g_hHookOpenServiceW);
     }
 
-    if (hHookStartServiceA)
+    if (g_hHookStartServiceA)
     {
-        LhUninstallHook(hHookStartServiceA);
+        LhUninstallHook(g_hHookStartServiceA);
     }
 
-    if (hHookStartServiceW)
+    if (g_hHookStartServiceW)
     {
-        LhUninstallHook(hHookStartServiceW);
+        LhUninstallHook(g_hHookStartServiceW);
     }
 
-    if (hHookControlService)
+    if (g_hHookControlService)
     {
-        LhUninstallHook(hHookControlService);
+        LhUninstallHook(g_hHookControlService);
     }
 
-    if (hHookCloseServiceHandle)
+    if (g_hHookCloseServiceHandle)
     {
-        LhUninstallHook(hHookCloseServiceHandle);
+        LhUninstallHook(g_hHookCloseServiceHandle);
     }
 
     LhWaitForPendingRemovals();

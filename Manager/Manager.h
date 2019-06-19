@@ -27,8 +27,6 @@ public:
 // Implementation
 
 	DECLARE_MESSAGE_MAP()
-private:
-    bool EnableDebugPrivilege();
 public:
     virtual int ExitInstance();
 private:

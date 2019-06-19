@@ -157,10 +157,10 @@ extern TRCStartServiceW g_pfnStartServiceW;
 extern TRCControlService g_pfnControlService;
 extern TRCCloseServiceHandle g_pfnCloseServiceHandle;
 
-extern ULONG hookOpenServiceA_ACLEntries[1];
-extern ULONG hookOpenServiceW_ACLEntries[1];
-extern ULONG hookStartServiceA_ACLEntries[1];
-extern ULONG hookStartServiceW_ACLEntries[1];
-extern ULONG hookControlService_ACLEntries[1];
-extern ULONG hookCloseServiceHandle_ACLEntries[1];
+extern ULONG g_hookOpenServiceAclEntriesA[1];
+extern ULONG g_hookOpenServiceAclEntriesW[1];
+extern ULONG g_hookStartServiceAclEntriesA[1];
+extern ULONG g_hookStartServiceAclEntriesW[1];
+extern ULONG g_hookControlServiceAclEntries[1];
+extern ULONG g_hookCloseServiceHandleAclEntries[1];
 #endif

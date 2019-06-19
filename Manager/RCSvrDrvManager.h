@@ -95,6 +95,10 @@ public:
     */
     std::vector<RCINFO> GetVecValue(RClServerSearchType searchType, std::string searchName = "");
 
+    /**
+    * @brief 获取成员变量容量的大小
+    * @return 返回成员变量容量的大小
+    */
     size_t GetVecSize();
 
     /**
