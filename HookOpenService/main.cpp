@@ -1,5 +1,4 @@
 #include "ProcessOper.h"
-#include "..\Public\easyhook.h"
 #include "windows.h"
 
 #pragma data_seg("shared")
