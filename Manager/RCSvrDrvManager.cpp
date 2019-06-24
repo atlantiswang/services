@@ -90,8 +90,7 @@ bool RCSvrDrvManager::GetAllServerInfo(DWORD dwServerType)
                 (BYTE*)lpqscBuf2, dwNeeded, &dwNeeded))
             {
                 printf(" Description: %s\n", lpqscBuf2->lpDescription);
-                if (lpqscBuf2->lpDescription != NULL ||
-                    dwServerType != SERVICE_DRIVER)
+                if (lpqscBuf2->lpDescription != NULL)
                 {
                     strncpy_s(rcinfo.displayName, 2048, lpqscBuf2->lpDescription, 2040);
                 }

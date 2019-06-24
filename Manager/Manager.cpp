@@ -73,6 +73,11 @@ BOOL CManagerApp::InitInstance()
 //    EnableDebugPrivilege();
 
     m_hModule = LoadLibraryA("HookOpenService.dll");
+    if (m_hModule == NULL)
+    {
+        AfxMessageBox("load HookOpenService.dll failed ,check the dll's path");
+        return FALSE;
+    }
 
 	CManagerDlg dlg;
 	m_pMainWnd = &dlg;

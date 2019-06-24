@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "HookOpenService", "HookOpenService\HookOpenService.vcxproj", "{5E577A48-52E2-454C-A9F1-D91AD44ECCA6}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Manager", "Manager\Manager.vcxproj", "{F4B5B47D-5459-4B43-B43A-420416424CA1}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5E577A48-52E2-454C-A9F1-D91AD44ECCA6} = {5E577A48-52E2-454C-A9F1-D91AD44ECCA6}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
